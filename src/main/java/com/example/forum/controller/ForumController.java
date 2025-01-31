@@ -1,7 +1,9 @@
 package com.example.forum.controller;
 
+import com.example.forum.controller.form.CommentForm;
 import com.example.forum.controller.form.ReportForm;
 import com.example.forum.service.ReportService;
+import com.example.forum.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +15,7 @@ import java.util.List;
 public class ForumController {
     @Autowired
     ReportService reportService;
+    CommentService commentService;
 
     /*
      * 投稿内容表示処理
@@ -52,6 +55,15 @@ public class ForumController {
         // 投稿をテーブルに格納
         reportService.saveReport(reportForm);
         // rootへリダイレクト
+        return new ModelAndView("redirect:/");
+    }
+
+    //コメント機能
+    @PostMapping(value = "/comment/{id}")
+    public  ModelAndView comment(@PathVariable Integer id, @ModelAttribute("formModel") CommentForm commentForm) {
+        //idをcommentにセットする
+        commentForm.setMessageId(id);
+        commentService.saveComment(commentForm);
         return new ModelAndView("redirect:/");
     }
 

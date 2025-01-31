@@ -34,7 +34,14 @@
   </div>
 
 <!-- コメント欄のform POST -->
-<!-- 投稿のidを渡す -->
+  <form method="post" action="@{/comment/{id}(id=${content.id})}" th:object="${formModel}">
+    <!-- 投稿のidを渡す -->
+    <div class="form-area">
+      <label>投稿内容</label>
+      <textarea class="tweet-box" th:field="*{content}" size="20" maxlength="200" /></textarea><br/>
+      <input type="submit" value="返信" />
+    </div>
+  </form>
 </div>
 </body>
 </html>
